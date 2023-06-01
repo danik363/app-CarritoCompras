@@ -82,6 +82,10 @@ namespace Negocio
                 cmd.Parameters.AddWithValue(nombre, valor);
         }
 
-        
+        public void setearConsultaAlmacenada(string sp)
+        {
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandText = sp;
+        }
     }
 }

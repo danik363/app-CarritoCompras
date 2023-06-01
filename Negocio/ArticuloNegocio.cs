@@ -50,6 +50,59 @@ namespace Negocio
 			}
 		}
 
+
+		public List<Articulo> listarConSP()
+		{
+			List<Articulo> lista = new List<Articulo>();
+			AccesoDatos datos = new AccesoDatos();
+
+			try
+			{
+				datos.setearConsultaAlmacenada("storedListar");
+				datos.ejecutarConsulta();
+
+				while (datos.Lector.Read())
+				{
+					Articulo aux = new Articulo();
+
+					aux.Id = (int)datos.Lector["Id"];
+					aux.Codigo = (string)datos.Lector["Codigo"];
+					aux.Nombre = (string)datos.Lector["Nombre"];
+					aux.Descripcion = (string)datos.Lector["Descripcion"]; //El modelo que se esta creando no necesita una validacion de null al momento de traer los datos de la db
+					aux.Imagen = new Imagen();
+					if (!(datos.Lector["ImagenUrl"] is DBNull))
+					{
+						aux.Imagen.Url = (string)datos.Lector["ImagenUrl"];//Debido a que desde el lado de la app se obliga a colocar todos los datos 
+					}
+					else
+					{
+						aux.Imagen.Url = "http://www.https://wintechnology.co/wp-content/uploads/2021/11/imagen-no-disponible.jpg";
+
+					}
+
+
+					aux.Marca = new Marca();
+					aux.Marca.Id = (int)datos.Lector["IDMarca"];
+					aux.Marca.Descripcion = (string)datos.Lector["Marca"];
+					aux.Categoria = new Categoria();
+					aux.Categoria.Id = (int)datos.Lector["IDCategoria"];
+					aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
+					aux.Precio = (decimal)datos.Lector["Precio"];
+
+					lista.Add(aux);
+				}
+				return lista;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+			finally
+			{
+				datos.cerrarConexion();
+			}
+
+		}
 		public void agregar(Articulo nuevo)
 		{
 			AccesoDatos datos = new AccesoDatos();
