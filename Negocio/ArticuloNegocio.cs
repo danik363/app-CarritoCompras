@@ -137,11 +137,15 @@ namespace Negocio
 				datos.cerrarConexion();
 			}
 		}
-        public List<Articulo> listar()
+        public List<Articulo> listar(string id = "")
         {
 			List<Articulo> lista = new List<Articulo>();
             string consulta = "Select A.Id, A.Codigo, A.Nombre, A.Descripcion, I.ImagenUrl, M.Descripcion as Marca, C.Descripcion as Categoria, A.Precio, M.Id as IDMarca, C.Id as IDCategoria From ARTICULOS A Inner Join IMAGENES I ON A.Id = I.IdArticulo Inner Join MARCAS M ON A.IdMarca = M.Id Inner Join CATEGORIAS C ON A.IdCategoria = C.Id";
             AccesoDatos datos = new AccesoDatos();
+            if (id != "")
+            {
+                consulta += " where A.Id=" + id;
+            }
             try
 			{
 				datos.setearConsulta(consulta);
@@ -258,6 +262,7 @@ namespace Negocio
 
                     lista.Add(aux);
                 }
+
                 return lista;
             }
             catch (Exception ex)
@@ -271,6 +276,51 @@ namespace Negocio
 
 		}
 		
+		public List<Imagen> listImagenes(string id="")
+		{
+            List<Imagen> lista = new List<Imagen>();
+            string consulta = "Select idArticulo, ImagenUrl from IMAGENES";
+            AccesoDatos datos = new AccesoDatos();
+			if(id != "")
+			{
+				consulta += " where idArticulo=" + id;
+			}
+
+			consulta += " order by idArticulo asc";
+            
+			try
+            {
+                datos.setearConsulta(consulta);
+                datos.ejecutarConsulta();
+
+                while (datos.Lector.Read())
+                {
+                    Imagen aux = new Imagen();
+
+                    if (!(datos.Lector["ImagenUrl"] is DBNull))
+                    {
+                        aux.Url = (string)datos.Lector["ImagenUrl"];//Debido a que desde el lado de la app se obliga a colocar todos los datos 
+                    }
+                    else
+                    {
+                        aux.Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
+
+                    }
+
+                    lista.Add(aux);
+                }
+				
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 		public void eliminar (int Id)
 		{
 			try
