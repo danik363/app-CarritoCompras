@@ -26,14 +26,20 @@ namespace app_CarritoCompras
                     ListaImagen = negocio.listImagenes(id);
 
                     auxList = negocio.listar(id);
-
-                    articulo = auxList[0];
+                     
+                    articulo = auxList[0]; //Solo saco lo del indice 0 ya que la query solo me trae un elemento dentro de la ListaImagen
 
 
                 }
 
+
             }
 
+        }
+
+        protected void btnCarrito_Click(object sender, EventArgs e)
+        {
+            ///LOGICA DE SESION PARA AÑADIR CARRITO
         }
     }
 }

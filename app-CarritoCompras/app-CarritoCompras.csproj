@@ -65,6 +65,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CarritoDeArticulos.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DetallesDeArticulo.aspx" />
     <Content Include="Global.asax" />
@@ -73,6 +74,13 @@
     <Content Include="ListaDeArticulos.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarritoDeArticulos.aspx.cs">
+      <DependentUpon>CarritoDeArticulos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CarritoDeArticulos.aspx.designer.cs">
+      <DependentUpon>CarritoDeArticulos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

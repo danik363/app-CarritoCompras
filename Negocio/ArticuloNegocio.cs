@@ -137,14 +137,15 @@ namespace Negocio
 				datos.cerrarConexion();
 			}
 		}
-        public List<Articulo> listar(string id = "")
+        public List<Articulo> listar(string id = "")  //Solo lista informacion del articulo no imagenes
         {
 			List<Articulo> lista = new List<Articulo>();
-            string consulta = "Select A.Id, A.Codigo, A.Nombre, A.Descripcion, I.ImagenUrl, M.Descripcion as Marca, C.Descripcion as Categoria, A.Precio, M.Id as IDMarca, C.Id as IDCategoria From ARTICULOS A Inner Join IMAGENES I ON A.Id = I.IdArticulo Inner Join MARCAS M ON A.IdMarca = M.Id Inner Join CATEGORIAS C ON A.IdCategoria = C.Id";
+            string consulta = "Select A.Id, A.Codigo, A.Nombre, A.Descripcion, M.Descripcion as Marca, C.Descripcion as Categoria, A.Precio, M.Id as IDMarca, C.Id as IDCategoria From ARTICULOS A Inner Join MARCAS M ON A.IdMarca = M.Id Inner Join CATEGORIAS C ON A.IdCategoria = C.Id";
             AccesoDatos datos = new AccesoDatos();
             if (id != "")
             {
                 consulta += " where A.Id=" + id;
+
             }
             try
 			{
@@ -159,15 +160,7 @@ namespace Negocio
 					aux.Codigo = (string)datos.Lector["Codigo"];
 					aux.Nombre = (string)datos.Lector["Nombre"];
 					aux.Descripcion = (string)datos.Lector["Descripcion"]; //El modelo que se esta creando no necesita una validacion de null al momento de traer los datos de la db
-					aux.Imagen = new Imagen();
-					if(!(datos.Lector["ImagenUrl"] is DBNull)){
-                        aux.Imagen.Url = (string)datos.Lector["ImagenUrl"];//Debido a que desde el lado de la app se obliga a colocar todos los datos 
-					}
-					else
-					{
-						aux.Imagen.Url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
-
-                    }
+					
 					
 					
 					aux.Marca = new Marca();
@@ -276,17 +269,17 @@ namespace Negocio
 
 		}
 		
-		public List<Imagen> listImagenes(string id="")
+		public List<Imagen> listImagenes(string id="")  //Se lista solo imagenes
 		{
             List<Imagen> lista = new List<Imagen>();
             string consulta = "Select idArticulo, ImagenUrl from IMAGENES";
             AccesoDatos datos = new AccesoDatos();
-			if(id != "")
+			if(id != "") 
 			{
-				consulta += " where idArticulo=" + id;
+				consulta += " where idArticulo=" + id;  //Si llega un id por parametros le agrega el where para traer solo las imagenes de un det articulo
 			}
 
-			consulta += " order by idArticulo asc";
+			consulta += " order by idArticulo asc"; //Las ordeno para que cpu haga menos esfuerzo al momento de asignar las imagenes de la lista al articulo que corresponde
             
 			try
             {
@@ -297,7 +290,9 @@ namespace Negocio
                 {
                     Imagen aux = new Imagen();
 
-                    if (!(datos.Lector["ImagenUrl"] is DBNull))
+					aux.IdArticulo = (int)datos.Lector["idArticulo"];
+
+                    if (!(datos.Lector["ImagenUrl"] is DBNull) & ((string)datos.Lector["ImagenUrl"] != "")) //Evalua si no se cargo una imagen o si se cargo una cadena vacia
                     {
                         aux.Url = (string)datos.Lector["ImagenUrl"];//Debido a que desde el lado de la app se obliga a colocar todos los datos 
                     }

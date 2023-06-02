@@ -23,23 +23,22 @@
                             <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a runat="server" href="ListaDeArticulos.aspx" class="nav-link active" aria-current="page" >Listado</a>
+                            <a runat="server" href="ListaDeArticulos.aspx" class="nav-link active" aria-current="page">Listado</a>
                         </li>
                     </ul>
                     <div class="d-flex w-25 m-auto">
                         <asp:TextBox ID="txbSearch" runat="server" CssClass="form-control me-2" placeholder="Search"> </asp:TextBox>
-                        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-outline-success"/>
+                        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-outline-success" />
                     </div>
                 </div>
             </div>
         </nav>
         <div>
+
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                <asp:Repeater runat="server" ID="reRepetidor">
-                    <ItemTemplate>
-                    </ItemTemplate>
-                </asp:Repeater>
             </asp:ContentPlaceHolder>
+
+
         </div>
     </form>
 </body>
