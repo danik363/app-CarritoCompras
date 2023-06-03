@@ -67,8 +67,7 @@ namespace app_CarritoCompras
 
         protected void TxtFiltro_TextChanged(object sender, EventArgs e)
         {
-            List<Articulo> lista = (List<Articulo>)Session["ListaArticulos"];
-            List<Articulo> listafiltrada = lista.FindAll(x => x.Nombre.ToUpper().Contains(TxtFiltro.Text.ToUpper()));
+            List<Articulo> listafiltrada = listaArticulos.FindAll(x => x.Nombre.ToUpper().Contains(TxtFiltro.Text.ToUpper()));
             reRepiter.DataSource = listafiltrada;
             reRepiter.DataBind();
         }
