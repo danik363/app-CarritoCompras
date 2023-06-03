@@ -10,17 +10,11 @@ namespace app_CarritoCompras
 {
     public partial class CarritoDeArticulos : System.Web.UI.Page
     {
-        public List<string> listId { get; set; }
+        public List<ArticulosCarrito> listado;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                listId = (List<string>)Session["Carrito"];
+            List<CarritoDeArticulos> listado = Session["listadoCarrito"] as List<CarritoDeArticulos>;
 
-                
-
-            }
-            
         }
     }
 }

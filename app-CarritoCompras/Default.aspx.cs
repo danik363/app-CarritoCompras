@@ -11,21 +11,21 @@ namespace app_CarritoCompras
 {
     public partial class Default : System.Web.UI.Page
     {
+        public List<Articulo> listaArticulos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                listaArticulos = negocio.listar();
+                List<Imagen> listImagenes = negocio.listImagenes();
+                Session.Add("ListaArticulos", listaArticulos);
+                Session.Add("ListaImagenes", listImagenes);
+
             if (!IsPostBack) //Solo se da cuando apenas ingresas a la pagina
             {
-                ArticuloNegocio negocio = new ArticuloNegocio();
-                List<Articulo> listaArticulos = negocio.listar(); //Solo trae informacion del articulo no la imagen
-                List<Imagen> listImagenes = negocio.listImagenes(); //Trae todas las imagenes
-
-                listaArticulos = asignarImagenArticulos(listaArticulos, listImagenes);  //Se le asigna una imagen a cada uno
-
-                reRepiter.DataSource = listaArticulos; 
+                listaArticulos = asignarImagenArticulos(listaArticulos, listImagenes);
+                reRepiter.DataSource = listaArticulos;
                 reRepiter.DataBind();
             }
-
         }
         public List<Articulo> asignarImagenArticulos(List<Articulo> listArt, List<Imagen> listImg) { //Asigna la primera imagen que encuentra del articulo a cada articulo
 
@@ -45,16 +45,26 @@ namespace app_CarritoCompras
         protected void btnCarrito_Click(object sender, EventArgs e)
         {
             Button btnCarrito = (Button)sender;
+            int idArticulo = Convert.ToInt32(btnCarrito.CommandArgument);
+            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
+            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
 
-            if (Session["Carrito"] == null)
-            {
-                Session.Add("Carrito", new List<string>());
-            }
-            else
-            {
+            Articulo nuevo = new Articulo();
+            nuevo= listaArticulos.Find(a => a.Id == idArticulo);
 
-                ((List<string>)Session["Carrito"]).Add(btnCarrito.CommandArgument.ToString());
+            if (nuevo != null)
+            {
+                ArticulosCarrito comprado = new ArticulosCarrito();
+                comprado.idArticulo = nuevo.Id;
+                comprado.nombre = nuevo.Nombre;
+                comprado.precio = nuevo.Precio;
+                comprado.cantidad = 1;
+                listadoCarrito.Add(comprado);
+
             }
+
+            Session.Add("listadoCarrito", listadoCarrito);
+            Response.Redirect("CarritoDeArticulos.aspx");
         }
     }
 }
