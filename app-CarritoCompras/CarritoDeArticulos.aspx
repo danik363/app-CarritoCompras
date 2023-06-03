@@ -22,6 +22,6 @@
     <% }%>--%>
         <asp:GridView ID="dgvCarrito" cssClass="table table-dark" runat="server">
         </asp:GridView>
-      
     </div>
+    <a href="/Default.aspx" class="btn btn-primary">Volver</a>
 </asp:Content>

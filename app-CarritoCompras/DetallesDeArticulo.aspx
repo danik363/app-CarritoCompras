@@ -32,7 +32,7 @@
             <div id="carouselExampleIndicators" class="carousel slide Details__carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <% if (ListaImagen.Count > 1)  //Si mas de una imagen para el articulo seleccionado se muestran los paginadores de la parte de abajo del carrusel
+                  <%if (ListaImagen.Count > 1)  //Si mas de una imagen para el articulo seleccionado se muestran los paginadores de la parte de abajo del carrusel
                         {%>
                     <%for (int i = 0; i < ListaImagen.Count - 1; i++) //Dibuja los botones dependiendo la cantidad de imagenes
                         {%>

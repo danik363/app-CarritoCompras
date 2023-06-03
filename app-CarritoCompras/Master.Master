@@ -27,11 +27,10 @@
                         <li class="nav-item">
                             <a runat="server" href="ListaDeArticulos.aspx" class="nav-link active" aria-current="page">Listado</a>
                         </li>
+                         <li class="nav-item">
+                            <a runat="server" href="CarritoDeArticulos.aspx" class="nav-link active" aria-current="page">Carrito</a>
+                        </li>
                     </ul>
-                    <div class="d-flex w-25 m-auto">
-                        <asp:TextBox ID="txbSearch" runat="server" CssClass="form-control me-2" placeholder="Search"> </asp:TextBox>
-                        <asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-outline-success" />
-                    </div>
                 </div>
             </div>
         </nav>

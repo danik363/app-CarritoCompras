@@ -63,7 +63,14 @@ namespace app_CarritoCompras
                 listadoCarrito.Add(comprado); 
             }
             Session.Add("listadoCarrito", listadoCarrito);
-            Response.Redirect("CarritoDeArticulos.aspx");
+        }
+
+        protected void TxtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            List<Articulo> lista = (List<Articulo>)Session["ListaArticulos"];
+            List<Articulo> listafiltrada = lista.FindAll(x => x.Nombre.ToUpper().Contains(TxtFiltro.Text.ToUpper()));
+            reRepiter.DataSource = listafiltrada;
+            reRepiter.DataBind();
         }
     }
 }

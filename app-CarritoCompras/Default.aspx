@@ -31,6 +31,8 @@
             justify-content:center
         }
     </style>
+    <asp:Label runat="server" Text="Buscar"></asp:Label>
+    <asp:TextBox ID="TxtFiltro" runat="server" AutoPostBack="true" OnTextChanged="TxtFiltro_TextChanged" ></asp:TextBox>
     <section class="Articles">
         <div class="cardsContainer row row-cols-1 row-cols-md-3 g-4">
             <asp:Repeater ID="reRepiter" runat="server">
