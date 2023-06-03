@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="app_CarritoCompras.Default" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"/>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
         .card {
@@ -31,7 +32,7 @@
             justify-content:center
         }
     </style>
-    <asp:Label runat="server" Text="Buscar"></asp:Label>
+    <asp:Label runat="server" Text="Buscar por nombre"></asp:Label>
     <asp:TextBox ID="TxtFiltro" runat="server" AutoPostBack="true" OnTextChanged="TxtFiltro_TextChanged" ></asp:TextBox>
     <section class="Articles">
         <div class="cardsContainer row row-cols-1 row-cols-md-3 g-4">

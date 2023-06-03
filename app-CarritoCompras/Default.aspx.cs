@@ -12,21 +12,26 @@ namespace app_CarritoCompras
     public partial class Default : System.Web.UI.Page
     {
         public List<Articulo> listaArticulos { get; set; }
+
+
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            { 
                 ArticuloNegocio negocio = new ArticuloNegocio();
                 listaArticulos = negocio.listar();
                 List<Imagen> listImagenes = negocio.listImagenes();
+                listaArticulos = asignarImagenArticulos(listaArticulos, listImagenes);
                 Session.Add("ListaArticulos", listaArticulos);
                 Session.Add("ListaImagenes", listImagenes);
-
-            if (!IsPostBack) //Solo se da cuando apenas ingresas a la pagina
-            {
-                listaArticulos = asignarImagenArticulos(listaArticulos, listImagenes);
-                reRepiter.DataSource = listaArticulos;
+                reRepiter.DataSource = (List<Articulo>)(Session["ListaArticulos"]);
                 reRepiter.DataBind();
-            }
+            } 
+            listaArticulos = (List<Articulo>)(Session["ListaArticulos"]);
         }
+
         public List<Articulo> asignarImagenArticulos(List<Articulo> listArt, List<Imagen> listImg) { //Asigna la primera imagen que encuentra del articulo a cada articulo
 
             foreach (Imagen img in listImg)

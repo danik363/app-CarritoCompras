@@ -14,7 +14,7 @@ namespace app_CarritoCompras
         protected void Page_Load(object sender, EventArgs e)
         {
             List<ArticulosCarrito> ListaCarrito = Session["listadoCarrito"] as List<ArticulosCarrito>;
-
+            
             if (ListaCarrito == null)
             {
                 ListaCarrito = new List<ArticulosCarrito>();
