@@ -39,6 +39,7 @@ namespace app_CarritoCompras
                     }
                 }
             }
+            Session["ListaArticulos"] = listArt;
             return listArt;
         }
 
@@ -59,10 +60,8 @@ namespace app_CarritoCompras
                 comprado.nombre = nuevo.Nombre;
                 comprado.precio = nuevo.Precio;
                 comprado.cantidad = 1;
-                listadoCarrito.Add(comprado);
-
+                listadoCarrito.Add(comprado); 
             }
-
             Session.Add("listadoCarrito", listadoCarrito);
             Response.Redirect("CarritoDeArticulos.aspx");
         }

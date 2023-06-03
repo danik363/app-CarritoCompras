@@ -13,8 +13,7 @@ namespace app_CarritoCompras
         protected void Page_Load(object sender, EventArgs e)
         {
             ArticuloNegocio articulo= new ArticuloNegocio();
-            dgvArticulos.DataSource = articulo.listarConSP();
-            dgvArticulos.DataBind();
+
 
         }
     }

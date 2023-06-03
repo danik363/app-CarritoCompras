@@ -13,5 +13,14 @@ namespace app_CarritoCompras
 
     public partial class CarritoDeArticulos
     {
+
+        /// <summary>
+        /// dgvCarrito control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView dgvCarrito;
     }
 }

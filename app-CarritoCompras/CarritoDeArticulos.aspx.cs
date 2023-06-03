@@ -10,11 +10,18 @@ namespace app_CarritoCompras
 {
     public partial class CarritoDeArticulos : System.Web.UI.Page
     {
-        public List<ArticulosCarrito> listado;
+   
         protected void Page_Load(object sender, EventArgs e)
         {
-            List<CarritoDeArticulos> listado = Session["listadoCarrito"] as List<CarritoDeArticulos>;
+            List<ArticulosCarrito> ListaCarrito = Session["listadoCarrito"] as List<ArticulosCarrito>;
 
+            if (ListaCarrito == null)
+            {
+                ListaCarrito = new List<ArticulosCarrito>();
+                Session["listadoCarrito"] = ListaCarrito;
+            }
+            dgvCarrito.DataSource = ListaCarrito;
+            dgvCarrito.DataBind();
         }
     }
 }
