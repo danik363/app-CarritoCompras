@@ -9,7 +9,7 @@
         List<int> idsMostrados = new List<int>();
         foreach (Dominio.ArticulosCarrito art in listadoCarrito)
         {
-            int cantidadmostrada =cantidadArticulos(art.idArticulo);
+            int cantidadmostrada =cantidadArticulos(art.idArticulo);                  
             decimal total = totalCompra(art.idArticulo);
             if (!idsMostrados.Contains(art.idArticulo)){
                 idsMostrados.Add(art.idArticulo);

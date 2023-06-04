@@ -13,11 +13,22 @@ namespace app_CarritoCompras
     {
         public List<Articulo> listaArticulos { get; set; }
 
+        public void cantidadArticulosTotales()
+        {
+            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
+            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
 
-
+            int cantidadTotales = 0;
+            foreach (ArticulosCarrito art in listadoCarrito)
+            {
+                cantidadTotales += art.cantidad;
+                Session.Add("CantidadCarrito", cantidadTotales);
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
@@ -29,7 +40,7 @@ namespace app_CarritoCompras
                 reRepiter.DataSource = (List<Articulo>)(Session["ListaArticulos"]);
                 reRepiter.DataBind();
             }
-            listaArticulos = (List<Articulo>)(Session["ListaArticulos"]);
+            listaArticulos = (List<Articulo>)(Session["ListaArticulos"]);       
         }
 
         public List<Articulo> asignarImagenArticulos(List<Articulo> listArt, List<Imagen> listImg)
@@ -69,6 +80,7 @@ namespace app_CarritoCompras
                 listadoCarrito.Add(comprado);
             }
             Session.Add("listadoCarrito", listadoCarrito);
+            cantidadArticulosTotales();
         }
 
         protected void TxtFiltro_TextChanged(object sender, EventArgs e)

@@ -57,6 +57,7 @@ namespace app_CarritoCompras
             return cantidadTotal;
 
         }
+
         public decimal totalCompra(int id)
         {
             decimal total = 0;
@@ -74,17 +75,7 @@ namespace app_CarritoCompras
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            decimal total = 0;
-            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
-            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
-           
-            foreach (ArticulosCarrito art in listadoCarrito)
-            {
-                if (art.idArticulo == id)
-                {
-                    total += art.precio;
-                }
-            }
+            
         }
     }
 }
