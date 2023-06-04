@@ -57,6 +57,7 @@ namespace app_CarritoCompras
             return cantidadTotal;
 
         }
+
         public decimal totalCompra(int id)
         {
             decimal total = 0;
@@ -73,6 +74,7 @@ namespace app_CarritoCompras
         }
         protected void ActualizarLabel()
         {
+<<<<<<< HEAD
             decimal total = compraFinal();
 
             // Asigna el valor al Text del Label
@@ -138,6 +140,9 @@ namespace app_CarritoCompras
         protected void btnVolverSin_Click(object sender, EventArgs e)
         {
             Response.Redirect("Default.aspx");
+=======
+            
+>>>>>>> 9c35efdb8d6867bac56a3e2028f0cd8c54cd5852
         }
     }
 }

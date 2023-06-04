@@ -30,6 +30,7 @@
                          <li class="nav-item">
                             <a runat="server" href="CarritoDeArticulos.aspx" class="nav-link active" aria-current="page">Carrito</a>
                         </li>
+                            <h5 class="card-text"><%:Session["CantidadCarrito"]%></h5>
                     </ul>
                 </div>
             </div>

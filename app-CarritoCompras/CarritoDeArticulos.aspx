@@ -13,8 +13,12 @@
         List<int> idsMostrados = new List<int>();
         foreach (Dominio.ArticulosCarrito art in listadoCarrito)
         {
+<<<<<<< HEAD
             int id = art.idArticulo;
             int cantidadmostrada = cantidadArticulos(art.idArticulo);
+=======
+            int cantidadmostrada =cantidadArticulos(art.idArticulo);                  
+>>>>>>> 9c35efdb8d6867bac56a3e2028f0cd8c54cd5852
             decimal total = totalCompra(art.idArticulo);
             if (!idsMostrados.Contains(art.idArticulo))
             {

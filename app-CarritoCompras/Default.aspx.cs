@@ -28,7 +28,11 @@ namespace app_CarritoCompras
 
         protected void Page_Load(object sender, EventArgs e)
         {
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 9c35efdb8d6867bac56a3e2028f0cd8c54cd5852
             if (!IsPostBack)
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
@@ -40,7 +44,7 @@ namespace app_CarritoCompras
                 reRepiter.DataSource = (List<Articulo>)(Session["ListaArticulos"]);
                 reRepiter.DataBind();
             }
-            listaArticulos = (List<Articulo>)(Session["ListaArticulos"]);
+            listaArticulos = (List<Articulo>)(Session["ListaArticulos"]);       
         }
 
         public List<Articulo> asignarImagenArticulos(List<Articulo> listArt, List<Imagen> listImg)
