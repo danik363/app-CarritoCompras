@@ -11,7 +11,18 @@ namespace app_CarritoCompras
 {
     public partial class CarritoDeArticulos : System.Web.UI.Page
     {
+        public void cantidadArticulosTotales()
+        {
+            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
+            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
 
+            int cantidadTotales = 0;
+            foreach (ArticulosCarrito art in listadoCarrito)
+            {
+                cantidadTotales += art.cantidad;
+                Session.Add("CantidadCarrito", cantidadTotales);
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -74,7 +85,7 @@ namespace app_CarritoCompras
         }
         protected void ActualizarLabel()
         {
-<<<<<<< HEAD
+// HEAD
             decimal total = compraFinal();
 
             // Asigna el valor al Text del Label
@@ -129,8 +140,9 @@ namespace app_CarritoCompras
                     
                     }
                 }
-                    Session["listadoCarrito"] = nuevaListaCarrito;
+                    Session["listadoCarrito"] = nuevaListaCarrito;                  
                 }
+            cantidadArticulosTotales();
         }
         protected void btnVolver_Click(object sender, EventArgs e)
         {
@@ -140,9 +152,9 @@ namespace app_CarritoCompras
         protected void btnVolverSin_Click(object sender, EventArgs e)
         {
             Response.Redirect("Default.aspx");
-=======
+
             
->>>>>>> 9c35efdb8d6867bac56a3e2028f0cd8c54cd5852
+
         }
     }
 }

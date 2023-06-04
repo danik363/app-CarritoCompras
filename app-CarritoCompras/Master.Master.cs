@@ -20,13 +20,14 @@ namespace app_CarritoCompras
             foreach (ArticulosCarrito art in listadoCarrito)
             {
                 cantidadTotales += art.cantidad;
-                Session.Add("CantidadCarrito", cantidadTotales);
+              
             }
+            Session.Add("CantidadCarrito", cantidadTotales);
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            cantidadArticulosTotales();
+            
 
         }
     }

@@ -15,11 +15,7 @@ namespace app_CarritoCompras
     {
 
         /// <summary>
-<<<<<<< HEAD
-        /// ScriptManager1 control.
-=======
-        /// Control btnEliminar.
->>>>>>> 9c35efdb8d6867bac56a3e2028f0cd8c54cd5852
+        /// Control ScriptManager1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
@@ -28,20 +24,20 @@ namespace app_CarritoCompras
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// Button1 control.
+        /// Control Button1.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
-        /// lblTotal control.
+        /// Control lblTotal.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTotal;
 
@@ -55,11 +51,11 @@ namespace app_CarritoCompras
         protected global::System.Web.UI.WebControls.Button btnVolver;
 
         /// <summary>
-        /// btnVolverSin control.
+        /// Control btnVolverSin.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnVolverSin;
     }
