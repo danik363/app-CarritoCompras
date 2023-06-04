@@ -19,7 +19,7 @@ namespace app_CarritoCompras
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            { 
+            {
                 ArticuloNegocio negocio = new ArticuloNegocio();
                 listaArticulos = negocio.listar();
                 List<Imagen> listImagenes = negocio.listImagenes();
@@ -28,11 +28,12 @@ namespace app_CarritoCompras
                 Session.Add("ListaImagenes", listImagenes);
                 reRepiter.DataSource = (List<Articulo>)(Session["ListaArticulos"]);
                 reRepiter.DataBind();
-            } 
+            }
             listaArticulos = (List<Articulo>)(Session["ListaArticulos"]);
         }
 
-        public List<Articulo> asignarImagenArticulos(List<Articulo> listArt, List<Imagen> listImg) { //Asigna la primera imagen que encuentra del articulo a cada articulo
+        public List<Articulo> asignarImagenArticulos(List<Articulo> listArt, List<Imagen> listImg)
+        { //Asigna la primera imagen que encuentra del articulo a cada articulo
 
             foreach (Imagen img in listImg)
             {
@@ -56,7 +57,7 @@ namespace app_CarritoCompras
             ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
 
             Articulo nuevo = new Articulo();
-            nuevo= listaArticulos.Find(a => a.Id == idArticulo);
+            nuevo = listaArticulos.Find(a => a.Id == idArticulo);
 
             if (nuevo != null)
             {
@@ -65,7 +66,7 @@ namespace app_CarritoCompras
                 comprado.nombre = nuevo.Nombre;
                 comprado.precio = nuevo.Precio;
                 comprado.cantidad = 1;
-                listadoCarrito.Add(comprado); 
+                listadoCarrito.Add(comprado);
             }
             Session.Add("listadoCarrito", listadoCarrito);
         }
