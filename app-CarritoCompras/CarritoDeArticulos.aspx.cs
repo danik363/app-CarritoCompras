@@ -11,13 +11,13 @@ namespace app_CarritoCompras
 {
     public partial class CarritoDeArticulos : System.Web.UI.Page
     {
-   
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 List<ArticulosCarrito> ListaCarrito = Session["listadoCarrito"] as List<ArticulosCarrito>;
-            
+
                 if (ListaCarrito == null)
                 {
                     ListaCarrito = new List<ArticulosCarrito>();
@@ -30,10 +30,10 @@ namespace app_CarritoCompras
         {
             List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
             ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
-            
-            foreach(ArticulosCarrito art in listadoCarrito)
+
+            foreach (ArticulosCarrito art in listadoCarrito)
             {
-                if(art.idArticulo == id)
+                if (art.idArticulo == id)
                 {
                     return true;
                 }
@@ -46,8 +46,8 @@ namespace app_CarritoCompras
             List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
             ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
 
-           int cantidadTotal=0;
-           foreach (ArticulosCarrito art in listadoCarrito)
+            int cantidadTotal = 0;
+            foreach (ArticulosCarrito art in listadoCarrito)
             {
                 if (art.idArticulo == id)
                 {
@@ -56,6 +56,35 @@ namespace app_CarritoCompras
             }
             return cantidadTotal;
 
+        }
+        public decimal totalCompra(int id)
+        {
+            decimal total = 0;
+            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
+            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
+            foreach (ArticulosCarrito art in listadoCarrito)
+            {
+                if (art.idArticulo == id)
+                {
+                    total += art.precio;
+                }
+            }
+            return total;
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            decimal total = 0;
+            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
+            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
+           
+            foreach (ArticulosCarrito art in listadoCarrito)
+            {
+                if (art.idArticulo == id)
+                {
+                    total += art.precio;
+                }
+            }
         }
     }
 }
