@@ -6,23 +6,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-
 namespace app_CarritoCompras
 {
     public partial class CarritoDeArticulos : System.Web.UI.Page
     {
-        public void cantidadArticulosTotales()
-        {
-            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
-            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
-
-            int cantidadTotales = 0;
-            foreach (ArticulosCarrito art in listadoCarrito)
-            {
-                cantidadTotales += art.cantidad;
-                Session.Add("CantidadCarrito", cantidadTotales);
-            }
-        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -34,116 +21,108 @@ namespace app_CarritoCompras
                     Session["listadoCarrito"] = ListaCarrito;
                 }
                 ActualizarLabel();
+                BindRepeater();
             }
         }
 
-        public bool articuloRepetido(int id)
+        protected void rptCarrito_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
-            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
-
-            foreach (ArticulosCarrito art in listadoCarrito)
+            if (e.CommandName == "Eliminar")
             {
-                if (art.idArticulo == id)
+                int idArticulo;
+                if (int.TryParse(e.CommandArgument.ToString(), out idArticulo))
                 {
-                    return true;
+                    EliminarArticulo(idArticulo);
+                    var master = Master as Master;
+                    if (master != null)
+                    {
+                        master.ActualizarCantidadArticulos();
+                    }
+                    ActualizarLabel();
+                    BindRepeater();
                 }
             }
-            return false;
         }
 
-        public int cantidadArticulos(int id)
+        private void EliminarArticulo(int idArticulo)
         {
-            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
-            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
+            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] as List<ArticulosCarrito>;
 
-            int cantidadTotal = 0;
-            foreach (ArticulosCarrito art in listadoCarrito)
+            if (listadoCarrito != null)
             {
-                if (art.idArticulo == id)
+                ArticulosCarrito articuloAEliminar = listadoCarrito.FirstOrDefault(a => a.idArticulo == idArticulo);
+
+                if (articuloAEliminar != null)
                 {
-                    cantidadTotal += art.cantidad;
+                    listadoCarrito.Remove(articuloAEliminar);
+                    Session["listadoCarrito"] = listadoCarrito;
+                    
                 }
             }
-            return cantidadTotal;
-
         }
 
-        public decimal totalCompra(int id)
+        protected void BindRepeater()
         {
-            decimal total = 0;
-            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
-            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
-            foreach (ArticulosCarrito art in listadoCarrito)
+            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] as List<ArticulosCarrito>;
+
+            if (listadoCarrito != null)
             {
-                if (art.idArticulo == id)
-                {
-                    total += art.precio;
-                }
+                rptCarrito.DataSource = listadoCarrito;
+                rptCarrito.DataBind();
             }
-            return total;
         }
+
         protected void ActualizarLabel()
         {
-// HEAD
             decimal total = compraFinal();
 
-            // Asigna el valor al Text del Label
             lblTotal.Text = total.ToString();
         }
 
         public decimal compraFinal()
         {
-
             decimal final = 0;
-            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
-            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
-            foreach (ArticulosCarrito art in listadoCarrito)
+            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] as List<ArticulosCarrito>;
+
+            if (listadoCarrito != null)
             {
-                final += art.precio;
+                final = listadoCarrito.Sum(a => a.precio);
             }
+
             return final;
         }
-        protected void btnEliminar_Click(object sender, EventArgs e)
+
+        public string totalCompra(int idArticulo)
         {
-            Button btnEliminar = sender as Button;
             List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] as List<ArticulosCarrito>;
-            List<ArticulosCarrito> nuevaListaCarrito = new List<ArticulosCarrito>();
-            if (btnEliminar != null)
+
+            if (listadoCarrito != null)
             {
-                string idSeleccionado = btnEliminar.CommandArgument;
-                int idEliminar;
-                if (!string.IsNullOrEmpty(idSeleccionado))
+                ArticulosCarrito articulo = listadoCarrito.FirstOrDefault(a => a.idArticulo == idArticulo);
+
+                if (articulo != null)
                 {
-                    if (int.TryParse(idSeleccionado, out idEliminar))
-                    {
-                        int cantidad = cantidadArticulos(idEliminar);
-                        if (cantidad > 1)
-                        {
-                            ArticulosCarrito articuloAEliminar = listadoCarrito.FirstOrDefault(a => a.idArticulo == idEliminar);
-                            listadoCarrito.Remove(articuloAEliminar);
-                            nuevaListaCarrito = listadoCarrito;
-                        }
-                        else
-                        {
-                            foreach(ArticulosCarrito art in listadoCarrito)
-                            {
-                                if (cantidadArticulos(art.idArticulo) > 1)
-                                {
-                                    if (art.idArticulo != idEliminar)
-                                    {
-                                        nuevaListaCarrito.Add(art);
-                                    }
-                                }
-                            }
-                        }
-                    
-                    }
+                    decimal total = articulo.precio * articulo.cantidad;
+                    return total.ToString();
                 }
-                    Session["listadoCarrito"] = nuevaListaCarrito;                  
-                }
-            cantidadArticulosTotales();
+            }
+
+            return "0";
         }
+
+        public string cantidadArticulos(int idArticulo)
+        {
+            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] as List<ArticulosCarrito>;
+
+            if (listadoCarrito != null)
+            {
+                int cantidad = listadoCarrito.Where(a => a.idArticulo == idArticulo).Sum(a => a.cantidad);
+                return cantidad.ToString();
+            }
+
+            return "0";
+        }
+
         protected void btnVolver_Click(object sender, EventArgs e)
         {
             Response.Redirect("Default.aspx");
@@ -152,9 +131,6 @@ namespace app_CarritoCompras
         protected void btnVolverSin_Click(object sender, EventArgs e)
         {
             Response.Redirect("Default.aspx");
-
-            
-
         }
     }
 }

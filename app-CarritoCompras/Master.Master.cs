@@ -10,25 +10,33 @@ namespace app_CarritoCompras
 {
     public partial class Master : System.Web.UI.MasterPage
     {
-
-        public void cantidadArticulosTotales()
+        protected void Page_Load(object sender, EventArgs e)
         {
-            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] != null
-            ? (List<ArticulosCarrito>)Session["listadoCarrito"] : new List<ArticulosCarrito>();
+            if (!IsPostBack)
+            {
+                ActualizarCantidadArticulos();
+            }
+        }
 
+        public void ActualizarCantidadArticulos()
+        {
+            List<ArticulosCarrito> listadoCarrito = Session["listadoCarrito"] as List<ArticulosCarrito> ?? new List<ArticulosCarrito>();
             int cantidadTotales = 0;
             foreach (ArticulosCarrito art in listadoCarrito)
             {
                 cantidadTotales += art.cantidad;
-              
             }
-            Session.Add("CantidadCarrito", cantidadTotales);
+            Session["CantidadCarrito"] = cantidadTotales;
+
+            // Actualizar el valor en el control de la página
+            var cantidadCarrito = FindControl("cantidadCarrito") as Literal;
+            if (cantidadCarrito != null)
+            {
+                cantidadCarrito.Text = cantidadTotales.ToString();
+            }
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            
 
-        }
+
     }
 }
