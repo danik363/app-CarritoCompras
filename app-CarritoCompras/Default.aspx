@@ -40,7 +40,7 @@
                 <ItemTemplate>
                     <div class="col w-auto">
                         <div class="card">
-                            <img src="<%# Eval("Imagen.Url") %>" class="card-img-top" alt="...">
+                            <img src="<%#Eval("Imagen.URL") %>" class="card-img-top" alt="..." onerror="this.src='https://media.istockphoto.com/id/1193046540/es/vector/foto-pr%C3%B3ximamente-icono-de-imagen-ilustraci%C3%B3n-vectorial-aislado-sobre-fondo-blanco-no-hay.jpg?s=612x612&w=0&k=20&c=sblCjtqWoLEpWnqGZMr5yuiltE2bsiuH-WwsecNGSIA=';"> 
                             <div class="card-body">
                                 <h5 class="card-title"><%# Eval("Nombre") %></h5>
                                 <p class="card-text"><%# Eval("Descripcion") %></p>
